@@ -65,6 +65,31 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
+
+
+
+
+
+
+
+
+Stopwatch Project: Tracking Time with Precision
+Description: Developed a stopwatch application using React, enabling users to track time with high precision, including hours, minutes, seconds, and milliseconds. The application features start, stop, reset, and split functionality, along with a resume feature for paused timers.
+
+Key Contributions:
+
+Implemented timer logic to accurately track time and handle various user interactions.
+Designed and developed an intuitive user interface for seamless user experience.
+Utilized React hooks for efficient state management and component lifecycle.
+Technologies Used:
+React, JavaScript (ES6), HTML5, CSS3
+
+Achievements:
+
+Successfully incorporated a resume feature, enhancing user experience and functionality.
+Received positive feedback for the intuitive design and smooth performance.
+Demonstrated proficiency in front-end development and React framework.
+
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
