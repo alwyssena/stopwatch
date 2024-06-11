@@ -7,7 +7,11 @@
   height: 100vh;
   background-color: #c5b9b9;
 }
-
+.h{
+  text-align: center;
+  color:rgb(62, 59, 65);
+  font-family: italic;
+}
 .clock {
   font-size: 48px;
   margin-bottom: 20px;
@@ -15,6 +19,7 @@
 
 .buttons {
   margin-bottom: 20px;
+  
   
 }
 

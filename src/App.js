@@ -4,7 +4,7 @@ import './App.css';
 
 function StartButton({ isRunning, startTimer }) {
   return (
-    <button onClick={startTimer} disabled={isRunning}>Start</button>
+    <button style={{backgroundColor:"green"}}onClick={startTimer} disabled={isRunning}>Start</button>
   );
 }
 
@@ -16,7 +16,7 @@ function StopButton({ isRunning, stopTimer }) {
 
 function ResetButton({ timer, resetTimer }) {
   return (
-    <button onClick={resetTimer} disabled={timer.millisec === 0 && timer.sec === 0 && timer.min === 0 && timer.hr === 0}>Reset</button>
+    <button style={{backgroundColor:"red"}} onClick={resetTimer} disabled={timer.millisec === 0 && timer.sec === 0 && timer.min === 0 && timer.hr === 0}>Reset</button>
   );
 }
 
@@ -85,6 +85,7 @@ function App() {
 
   return (
     <div className="bg">
+      <h1 className='h'>StopWatch</h1>
       <div className="clock">
         {timer.hr < 10 ? `0${timer.hr}` : timer.hr}:
         {timer.min < 10 ? `0${timer.min}` : timer.min}:
@@ -109,7 +110,7 @@ function App() {
           <h3>Splits</h3>
           <ul>
             {splits.map((split, index) => (
-              <li key={index}>{split}</li>
+              <li key={index}>  {split}</li>
             ))}
           </ul>
         </div>
