@@ -45,4 +45,4 @@ class Login(GenericAPIView):
                              'Refresh':tokens['refresh']
                              },status=status.HTTP_200_OK)
         else:
-            return Response({'error':user.errors},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error':serializer.errors},status=status.HTTP_400_BAD_REQUEST)
