@@ -2,11 +2,13 @@ from django.shortcuts import render
 from . models import Create_User
 from . serializers import  Create_User_Serializer
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import CreateModelMixin,ListModelMixin
 from rest_framework import status
 from rest_framework.response import Response
 from . serializers import Login_User_Serializer
 from .utils import get_tokens_for_user
+
+from . serializers import Course_serializer
 
 
 # Create your views here.
@@ -28,6 +30,9 @@ class Create_Users(GenericAPIView,CreateModelMixin):
             if response.status_code==status.HTTP_201_CREATED:
                 return Response({'message':'User Create Successfully '},status=status.HTTP_201_CREATED)
             return response
+        
+# login 
+        
 class Login(GenericAPIView):
     serializer_class=Login_User_Serializer
     def post(self,request,*args,**kwargs):
@@ -41,8 +46,15 @@ class Login(GenericAPIView):
                              'last_name':user.last_name,
                              'email':user.email,
                              'password':user.password,
-                             'Token':tokens['access'],
-                             'Refresh':tokens['refresh']
+                             'token':tokens['access'],
+                             'refresh':tokens['refresh']
                              },status=status.HTTP_200_OK)
         else:
             return Response({'error':serializer.errors},status=status.HTTP_400_BAD_REQUEST)
+        
+# add Course 
+
+class AddCourse(GenericAPIView,CreateModelMixin):
+    serializer_class=Course_serializer
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)

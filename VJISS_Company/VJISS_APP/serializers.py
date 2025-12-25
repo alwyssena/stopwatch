@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import check_password
 
+
 from . models import Create_User
+from. models import Courses_Model
 
 class Create_User_Serializer(serializers.ModelSerializer):
     class Meta:
@@ -28,4 +30,9 @@ class Login_User_Serializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Invalid email and password")
         data['user']=user
         return data 
+    
+class Course_serializer(serializers.ModelSerializer):
+    class Meta:
+        model=Courses_Model
+        fields="__all__"
         
