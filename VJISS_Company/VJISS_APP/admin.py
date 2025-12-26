@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Create_User, Courses_Model, Syllabus
+from .models import Create_User, Courses_Model, Syllabus_model
 
 @admin.register(Create_User)
 class CustomUserAdmin(UserAdmin):
@@ -16,4 +16,4 @@ class CustomUserAdmin(UserAdmin):
     )
 
 admin.site.register(Courses_Model)
-admin.site.register(Syllabus)
+admin.site.register(Syllabus_model)

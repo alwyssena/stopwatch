@@ -71,8 +71,8 @@ class Courses_Model(models.Model):
     level_choices=[('Beginner','Beginner'),('Intermediate','Intermediate'),('Advanced','Advanced')]
     course_level=models.CharField(max_length=20,choices=level_choices,default='Beginner')
     def __str__(self):
-        return str(self.public_id)
-class Syllabus(models.Model):
+        return  f"{self.course_name}\t ({self.public_id})"
+class Syllabus_model(models.Model):
     public_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     course_name=models.ForeignKey(Courses_Model,on_delete=models.CASCADE,related_name='syllabus_courses')
     Module=models.CharField(max_length=50)

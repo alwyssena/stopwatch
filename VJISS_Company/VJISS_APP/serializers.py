@@ -5,7 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 
 from . models import Create_User
 from. models import Courses_Model
-from . models import Syllabus
+from . models import Syllabus_model
 
 class Create_User_Serializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -45,6 +45,6 @@ class Course_serializer(serializers.ModelSerializer):
 
 class Syllabus_serializer(serializers.ModelSerializer):
     class Meta:
-        model=Syllabus
+        model=Syllabus_model
         fields="__all__"
         

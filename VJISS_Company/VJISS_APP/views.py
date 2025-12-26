@@ -2,7 +2,7 @@ from django.shortcuts import render
 from . models import Create_User
 from . serializers import  Create_User_Serializer
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin,ListModelMixin
+from rest_framework.mixins import CreateModelMixin,ListModelMixin,UpdateModelMixin,DestroyModelMixin
 from rest_framework import status
 from rest_framework.response import Response
 from . serializers import Login_User_Serializer
@@ -70,4 +70,23 @@ class Course_details(GenericAPIView,ListModelMixin):
     permission_classes=[IsAuthenticated]
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
-#
+    
+#modifiy
+
+class Course_modify(GenericAPIView,UpdateModelMixin):
+    serializer_class=Course_serializer
+    queryset=Courses_Model.objects.all()
+    permission_classes=[IsAdminUser]
+    def put(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
+    def patch(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
+#delete 
+
+class Course_delete(GenericAPIView,DestroyModelMixin):
+    serializer_class=Course_serializer
+    queryset=Courses_Model.objects.all()
+    permission_classes=[IsAdminUser]
+    def delete(self,request,*args,**kwargs):
+         self.destroy(request,*args,**kwargs)
+         return Response({'message':"Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)
