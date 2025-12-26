@@ -68,7 +68,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'VJISS_Company.urls'
 
+
+AUTH_USER_MODEL = 'VJISS_APP.Create_User'  # Replace VJISS_APP with your actual app name
+
 #JWT Tokenfrom datetime import timedelta
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

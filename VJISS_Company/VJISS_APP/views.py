@@ -9,7 +9,8 @@ from . serializers import Login_User_Serializer
 from .utils import get_tokens_for_user
 
 from . serializers import Course_serializer
-
+from . models import Courses_Model
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class Create_Users(GenericAPIView,CreateModelMixin):
@@ -58,3 +59,11 @@ class AddCourse(GenericAPIView,CreateModelMixin):
     serializer_class=Course_serializer
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
+
+#get courese
+class Course_details(GenericAPIView,ListModelMixin):
+    serializer_class=Course_serializer
+    queryset=Courses_Model.objects.all()
+    permission_classes=[IsAuthenticated]
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs)
