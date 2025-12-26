@@ -81,6 +81,7 @@ class Course_modify(GenericAPIView,UpdateModelMixin):
         return self.update(request,*args,**kwargs)
     def patch(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
+        
 #delete 
 
 class Course_delete(GenericAPIView,DestroyModelMixin):
