@@ -4,17 +4,16 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, Group, Permission
 
-def validator_password_length(value):
-    if len(value) < 8:
-        raise ValidationError("Password must be at least 8 characters long")
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('Email must be provided')
         email = self.normalize_email(email)
+        
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)
+        if password:
+            user.set_password(password)
         user.save(using=self._db)
         return user
 
@@ -36,7 +35,7 @@ class Create_User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(unique=True, blank=False, null=False)
     phone_number = models.CharField(max_length=15, unique=True, blank=False, null=False)
-    password = models.CharField(max_length=255, validators=[validator_password_length])
+   
     
     GENDER_CHOICES = [('M', 'Male'), ('F', 'Female'), ('O', 'Other')]
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
@@ -71,5 +70,12 @@ class Courses_Model(models.Model):
     course_description=models.TextField()
     level_choices=[('Beginner','Beginner'),('Intermediate','Intermediate'),('Advanced','Advanced')]
     course_level=models.CharField(max_length=20,choices=level_choices,default='Beginner')
+    def __str__(self):
+        return str(self.public_id)
+class Syllabus(models.Model):
+    public_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    course_name=models.ForeignKey(Courses_Model,on_delete=models.CASCADE,related_name='syllabus_courses')
+    Module=models.CharField(max_length=50)
+    description=models.TextField()
     def __str__(self):
         return str(self.public_id)

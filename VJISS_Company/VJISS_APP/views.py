@@ -10,7 +10,8 @@ from .utils import get_tokens_for_user
 
 from . serializers import Course_serializer
 from . models import Courses_Model
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
+
 
 # Create your views here.
 class Create_Users(GenericAPIView,CreateModelMixin):
@@ -25,10 +26,11 @@ class Create_Users(GenericAPIView,CreateModelMixin):
         if Create_User.objects.filter(email=email).exists():
             return Response({'error':'User with this mail already exists  '},status=status.HTTP_400_BAD_REQUEST)
         elif Create_User.objects.filter(phone_number=phone_number).exists():
-            return Response({'error':'User with this mail already exists  '},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error':'User with this phone number already exists  '},status=status.HTTP_400_BAD_REQUEST)
         else:
             response=self.create(request,*args,**kwargs)
             if response.status_code==status.HTTP_201_CREATED:
+                print(request.data.get('password'))
                 return Response({'message':'User Create Successfully '},status=status.HTTP_201_CREATED)
             return response
         
@@ -57,6 +59,7 @@ class Login(GenericAPIView):
 
 class AddCourse(GenericAPIView,CreateModelMixin):
     serializer_class=Course_serializer
+    permission_classes=[IsAdminUser]
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
 
@@ -67,3 +70,4 @@ class Course_details(GenericAPIView,ListModelMixin):
     permission_classes=[IsAuthenticated]
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
+#
