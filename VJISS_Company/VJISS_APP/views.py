@@ -12,6 +12,9 @@ from . serializers import Course_serializer
 from . models import Courses_Model
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
+from . serializers import Syllabus_serializer
+from . models import Syllabus_Model
+
 
 # Create your views here.
 class Create_Users(GenericAPIView,CreateModelMixin):
@@ -91,3 +94,30 @@ class Course_delete(GenericAPIView,DestroyModelMixin):
     def delete(self,request,*args,**kwargs):
          self.destroy(request,*args,**kwargs)
          return Response({'message':"Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)
+    
+#adding syllabus
+
+class SyllabusView(GenericAPIView,CreateModelMixin):
+    serializer_class=Syllabus_serializer
+    permission_classes=[IsAdminUser]
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
+
+#modify syllabus
+class SyllabusModify(GenericAPIView,UpdateModelMixin):
+    serializer_class=Syllabus_serializer
+    queryset=Syllabus_Model.objects.all()
+    permission_classes=[IsAdminUser]
+    def put(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
+    def patch(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
+
+#delete syllabus
+class SyllabusDelete(GenericAPIView,DestroyModelMixin):
+    serializer_class=Syllabus_serializer
+    queryset=Syllabus_Model.objects.all()
+    permission_classes=[IsAdminUser]
+    def delete(self,request,*args,**kwargs):
+        self.destroy(request,*args,**kwargs)
+        return Response({'message':"Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)

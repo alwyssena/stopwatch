@@ -67,15 +67,16 @@ class Courses_Model(models.Model):
     course_name=models.CharField(max_length=100)
     course_log=models.ImageField(upload_to='course_logos/')
     course_duration=models.CharField(max_length=50)
+    course_fee=models.IntegerField()
     course_description=models.TextField()
     level_choices=[('Beginner','Beginner'),('Intermediate','Intermediate'),('Advanced','Advanced')]
     course_level=models.CharField(max_length=20,choices=level_choices,default='Beginner')
     def __str__(self):
         return  f"{self.course_name}\t ({self.public_id})"
-class Syllabus_model(models.Model):
+class Syllabus_Model(models.Model):
     public_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     course_name=models.ForeignKey(Courses_Model,on_delete=models.CASCADE,related_name='syllabus_courses')
-    Module=models.CharField(max_length=50)
+    module=models.CharField(max_length=50)
     description=models.TextField()
     def __str__(self):
         return str(self.public_id)

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Create_User, Courses_Model, Syllabus_model
+from .models import Create_User, Courses_Model, Syllabus_Model
 
 @admin.register(Create_User)
 class CustomUserAdmin(UserAdmin):
@@ -14,6 +14,11 @@ class CustomUserAdmin(UserAdmin):
         ('Personal info', {'fields': ('first_name', 'last_name', 'phone_number', 'gender', 'date_of_birth')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
     )
+class CourseAdmin(admin.ModelAdmin):
+    list_display=['course_name','course_fee','course_level','course_duration',]
 
-admin.site.register(Courses_Model)
-admin.site.register(Syllabus_model)
+admin.site.register(Courses_Model,CourseAdmin)
+
+class SyllabusAdmin(admin.ModelAdmin):
+    list_display=['course_name','module','description']
+admin.site.register(Syllabus_Model,SyllabusAdmin)
