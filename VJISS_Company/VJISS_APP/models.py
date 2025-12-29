@@ -83,23 +83,24 @@ class Syllabus_Model(models.Model):
 
 #Specializations Model
 
-class Specializations(models.Model):
-    specialization_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
-    specialization_name=models.CharField(max_length=100)
-    specialization_description=models.TextField()
+class InternshipOffers(models.Model):
+    internship_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    internship_name=models.CharField(max_length=100)
+    internship_description=models.TextField()
     technologies=models.CharField(max_length=200)
     def __str__(self):
-        return str(self.specialization_id)
+        return str(self.internship_id)
 
 #intership model 
 class Apply_Internship(models.Model):
     application_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
-    full_name =models.ForeignKey(Create_User,on_delete=models.CASCADE)
+    first_name =models.CharField(max_length=200)
     last_name=models.CharField(max_length=200)
     email=models.EmailField()
     phone_number=models.CharField(max_length=15)
-    technology=models.CharField(max_length=100)
-    education=models.CharField(max_length=200)
+    internship_offers=models.ForeignKey(InternshipOffers,on_delete=models.CASCADE,related_name='internship_specializations')
+    educcation_choices=[('Diploma', 'Diploma'),('UG', 'Under Graduate'),('PG', 'Post Graduate'),('PhD', 'PhD'),]
+    education=models.CharField(max_length=200,choices=educcation_choices)
     resume=models.FileField(upload_to='resumes/')
     applied_on=models.DateTimeField(auto_now_add=True)
     status_choices=[('Pending','Pending'),('Accepted','Accepted'),('Rejected','Rejected')]

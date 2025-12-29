@@ -6,8 +6,9 @@ from django.contrib.auth.password_validation import validate_password
 from . models import Create_User
 from. models import Courses_Model
 from . models import Syllabus_Model
-from . models import Specializations
+from . models import InternshipOffers
 from. models import Apply_Internship
+
 
 class Create_User_Serializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -51,9 +52,9 @@ class Course_serializer(serializers.ModelSerializer):
         model=Courses_Model
         fields="__all__"
 
-class Specialization_serializer(serializers.ModelSerializer):
+class InternshipOffers_serializer(serializers.ModelSerializer):
     class Meta:
-        model=Specializations
+        model=InternshipOffers
         fields="__all__"
 class Apply_Internship_serializer(serializers.ModelSerializer):
     class Meta:

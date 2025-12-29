@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Create_User, Courses_Model, Syllabus_Model
-from .models import Specializations
+from .models import InternshipOffers
+from . models import Apply_Internship
 
 @admin.register(Create_User)
 class CustomUserAdmin(UserAdmin):
@@ -24,7 +25,10 @@ class SyllabusAdmin(admin.ModelAdmin):
     list_display=['course_name','module','description']
 admin.site.register(Syllabus_Model,SyllabusAdmin)
 
-class SpecializationAdmin(admin.ModelAdmin):
-    list_display=['specialization_name','technologies'] 
-admin.site.register(Specializations,SpecializationAdmin)
+class InternshipOffersAdmin(admin.ModelAdmin):
+    list_display=['internship_name','internship_description','technologies'] 
+admin.site.register(InternshipOffers,InternshipOffersAdmin)
 
+class Apply_InternshipAdmin(admin.ModelAdmin):
+    list_display=['first_name','last_name','email','phone_number','internship_offers','education','resume','applied_on','status','reason']    
+admin.site.register(Apply_Internship,Apply_InternshipAdmin)

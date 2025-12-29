@@ -15,8 +15,11 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from . serializers import Syllabus_serializer
 from . models import Syllabus_Model
 
-from . serializers import Specialization_serializer
-from . models import Specializations
+from . serializers import InternshipOffers_serializer
+from . models import InternshipOffers
+
+from . serializers import Apply_Internship_serializer
+from . models import Apply_Internship
 
 # Create your views here.
 class Create_Users(GenericAPIView,CreateModelMixin):
@@ -135,35 +138,45 @@ class SyllabusDelete(GenericAPIView,DestroyModelMixin):
         self.destroy(request,*args,**kwargs)
         return Response({'message':"Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)
 
-# Specializations can be added here similarly
-class AddSpecialization(GenericAPIView,CreateModelMixin):
-    serializer_class=Specialization_serializer
+# InternshipOffers can be added here similarly
+class AddInternshipOffers(GenericAPIView,CreateModelMixin):
+    serializer_class=InternshipOffers_serializer
     permission_classes=[IsAdminUser]
     def post(self,request,*args,**kwargs):
         return self.create(request,*args,**kwargs)
 
-#retive specialization can be implemented similarly
-class Specialization_details(GenericAPIView,ListModelMixin):
-    serializer_class=Specialization_serializer
-    queryset=Specializations.objects.all()
+#retive internship offers can be implemented similarly
+class InternshipOffers_details(GenericAPIView,ListModelMixin):
+    serializer_class=InternshipOffers_serializer
+    queryset=InternshipOffers.objects.all()
     permission_classes=[IsAuthenticated]
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs)
-#modify specialization
-class Specialization_modify(GenericAPIView,UpdateModelMixin):
-    serializer_class=Specialization_serializer
-    queryset=Specializations.objects.all()
+#modify internship offers
+class InternshipOffers_modify(GenericAPIView,UpdateModelMixin):
+    serializer_class=InternshipOffers_serializer
+    queryset=InternshipOffers.objects.all()
     permission_classes=[IsAdminUser]
     def put(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
     def patch(self,request,*args,**kwargs):
         return self.update(request,*args,**kwargs)
     
-#delete specialization can be implemented similarly
-class Specialization_delete(GenericAPIView,DestroyModelMixin):
-    serializer_class=Specialization_serializer
-    queryset=Specializations.objects.all()
+#delete internship offers can be implemented similarly
+class InternshipOffers_delete(GenericAPIView,DestroyModelMixin):
+    serializer_class=InternshipOffers_serializer
+    queryset=InternshipOffers.objects.all()
     permission_classes=[IsAdminUser]
     def delete(self,request,*args,**kwargs):
         self.destroy(request,*args,**kwargs)
         return Response({'message':"Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)
+
+# internship application view
+
+class InternshipApplication(GenericAPIView,CreateModelMixin):
+    serializer_class=Apply_Internship_serializer
+    print("internship application api hiting")
+    permission_classes=[IsAuthenticated]
+    def post(self,request,*args,**kwargs):
+        print(request.data)
+        return self.create(request,*args,**kwargs)
