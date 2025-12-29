@@ -63,7 +63,7 @@ class Create_User(AbstractBaseUser, PermissionsMixin):
 
     
 class Courses_Model(models.Model):
-    public_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    course_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     course_name=models.CharField(max_length=100)
     course_log=models.ImageField(upload_to='course_logos/')
     course_duration=models.CharField(max_length=50)
@@ -72,11 +72,38 @@ class Courses_Model(models.Model):
     level_choices=[('Beginner','Beginner'),('Intermediate','Intermediate'),('Advanced','Advanced')]
     course_level=models.CharField(max_length=20,choices=level_choices,default='Beginner')
     def __str__(self):
-        return  f"{self.course_name}\t ({self.public_id})"
+        return  f"{self.course_name}\t ({self.course_id})"
 class Syllabus_Model(models.Model):
-    public_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    syllabus_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     course_name=models.ForeignKey(Courses_Model,on_delete=models.CASCADE,related_name='syllabus_courses')
     module=models.CharField(max_length=50)
     description=models.TextField()
     def __str__(self):
-        return str(self.public_id)
+        return str(self.syllabus_id)
+
+#Specializations Model
+
+class Specializations(models.Model):
+    specialization_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    specialization_name=models.CharField(max_length=100)
+    specialization_description=models.TextField()
+    technologies=models.CharField(max_length=200)
+    def __str__(self):
+        return str(self.specialization_id)
+
+#intership model 
+class Apply_Internship(models.Model):
+    application_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    full_name =models.ForeignKey(Create_User,on_delete=models.CASCADE)
+    last_name=models.CharField(max_length=200)
+    email=models.EmailField()
+    phone_number=models.CharField(max_length=15)
+    technology=models.CharField(max_length=100)
+    education=models.CharField(max_length=200)
+    resume=models.FileField(upload_to='resumes/')
+    applied_on=models.DateTimeField(auto_now_add=True)
+    status_choices=[('Pending','Pending'),('Accepted','Accepted'),('Rejected','Rejected')]
+    status=models.CharField(max_length=20,choices=status_choices,default='Pending')
+    reason=models.TextField(blank=True,null=True)
+    def __str__(self):
+        return str(self.application_id)

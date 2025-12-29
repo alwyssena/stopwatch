@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Create_User, Courses_Model, Syllabus_Model
+from .models import Specializations
 
 @admin.register(Create_User)
 class CustomUserAdmin(UserAdmin):
@@ -22,3 +23,8 @@ admin.site.register(Courses_Model,CourseAdmin)
 class SyllabusAdmin(admin.ModelAdmin):
     list_display=['course_name','module','description']
 admin.site.register(Syllabus_Model,SyllabusAdmin)
+
+class SpecializationAdmin(admin.ModelAdmin):
+    list_display=['specialization_name','technologies'] 
+admin.site.register(Specializations,SpecializationAdmin)
+
