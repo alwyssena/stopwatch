@@ -97,12 +97,16 @@ class Course_delete(GenericAPIView,DestroyModelMixin):
     
 #adding syllabus
 
-class SyllabusView(GenericAPIView,CreateModelMixin):
+class AddSyllabus(GenericAPIView,CreateModelMixin):
     serializer_class=Syllabus_serializer
     permission_classes=[IsAdminUser]
     def post(self,request,*args,**kwargs):
-        return self.create(request,*args,**kwargs)
 
+        
+        serializer=self.get_serializer(data=request.data)
+        if serializer.is_valid():  
+            self.perform_create(serializer)
+            return Response({'message':'Syllabus added successfully'},status=status.HTTP_201_CREATED)
 #modify syllabus
 class SyllabusModify(GenericAPIView,UpdateModelMixin):
     serializer_class=Syllabus_serializer
