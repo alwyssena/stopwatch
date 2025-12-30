@@ -8,6 +8,7 @@ from. models import Courses_Model
 from . models import Syllabus_Model
 from . models import InternshipOffers
 from. models import Apply_Internship
+from .models import Job_Notifications
 
 
 class Create_User_Serializer(serializers.ModelSerializer):
@@ -56,7 +57,15 @@ class InternshipOffers_serializer(serializers.ModelSerializer):
     class Meta:
         model=InternshipOffers
         fields="__all__"
+        
 class Apply_Internship_serializer(serializers.ModelSerializer):
+    internship_offers = InternshipOffers_serializer(read_only=True)
+    internship_offers_id = serializers.PrimaryKeyRelatedField(queryset=InternshipOffers.objects.all(),write_only=True, source='internship_offers')
     class Meta:
         model=Apply_Internship
+        fields="__all__"
+
+class Job_Notifications_serializer(serializers.ModelSerializer):
+    class Meta:
+        model=Job_Notifications
         fields="__all__"

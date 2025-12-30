@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import Create_User, Courses_Model, Syllabus_Model
 from .models import InternshipOffers
 from . models import Apply_Internship
+from . models import Job_Notifications  
 
 @admin.register(Create_User)
 class CustomUserAdmin(UserAdmin):
@@ -32,3 +33,7 @@ admin.site.register(InternshipOffers,InternshipOffersAdmin)
 class Apply_InternshipAdmin(admin.ModelAdmin):
     list_display=['first_name','last_name','email','phone_number','internship_offers','education','resume','applied_on','status','reason']    
 admin.site.register(Apply_Internship,Apply_InternshipAdmin)
+
+class Job_NotificationsAdmin(admin.ModelAdmin):
+    list_display=['job_title','company_logo','company_name','location','job_description','requirements','link'] 
+admin.site.register(Job_Notifications,Job_NotificationsAdmin)

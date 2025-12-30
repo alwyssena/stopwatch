@@ -21,6 +21,9 @@ from . models import InternshipOffers
 from . serializers import Apply_Internship_serializer
 from . models import Apply_Internship
 
+from .models import Job_Notifications
+from .serializers import Job_Notifications_serializer
+
 # Create your views here.
 class Create_Users(GenericAPIView,CreateModelMixin):
     querset=Create_User.objects.all()
@@ -180,3 +183,65 @@ class InternshipApplication(GenericAPIView,CreateModelMixin):
     def post(self,request,*args,**kwargs):
         print(request.data)
         return self.create(request,*args,**kwargs)
+#view to see all applications (admin only)
+class ViewApplications(GenericAPIView,ListModelMixin):
+    serializer_class=Apply_Internship_serializer
+    permission_classes=[IsAuthenticated]
+    def get_queryset(self):
+        if self.request.user.is_superuser or self.request.user.is_staff:
+            return Apply_Internship.objects.all()
+        print("Logged in email:", self.request.user.email)
+        return Apply_Internship.objects.filter(email=self.request.user.email)
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs)
+#modify application
+class ModifyApplication(GenericAPIView,UpdateModelMixin):
+    serializer_class=Apply_Internship_serializer
+    queryset=Apply_Internship.objects.all()
+    permission_classes=[IsAdminUser]
+    def put(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
+    def patch(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs) 
+  #delete application   
+class DeleteApplication(GenericAPIView,DestroyModelMixin):
+    serializer_class=Apply_Internship_serializer
+    queryset=Apply_Internship.objects.all()
+    permission_classes=[IsAdminUser]
+    def delete(self,request,*args,**kwargs):
+        self.destroy(request,*args,**kwargs)
+        return Response({'message':"Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)
+
+# job notifications can be added here similarly
+class AddJobNotification(GenericAPIView,CreateModelMixin):
+    serializer_class=Job_Notifications_serializer
+    permission_classes=[IsAdminUser]
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
+    
+#job notification view can be added here similarly
+class JobNotificationDetails(GenericAPIView,ListModelMixin):
+    serializer_class=Job_Notifications_serializer
+    queryset=Job_Notifications.objects.all()
+    permission_classes=[IsAuthenticated]
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs)
+    
+#jon notification modify 
+class JobNotificationModify(GenericAPIView,UpdateModelMixin):
+    serializer_class=Job_Notifications_serializer
+    queryset=Job_Notifications.objects.all()
+    permission_classes=[IsAdminUser]
+    def put(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
+    def patch(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
+
+#job notification delete can be implemented similarly
+class JobNotificationDelete(GenericAPIView,DestroyModelMixin):
+    serializer_class=Job_Notifications_serializer
+    queryset=Job_Notifications.objects.all()
+    permission_classes=[IsAdminUser]
+    def delete(self,request,*args,**kwargs):
+        self.destroy(request,*args,**kwargs)
+        return Response({'message':"Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)

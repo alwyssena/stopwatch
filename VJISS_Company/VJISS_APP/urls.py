@@ -4,7 +4,8 @@ from .views import AddCourse
 from .views import Course_details,Course_modify,Course_delete
 from .views import AddSyllabus,SyllabusModify,SyllabusDelete
 from .views import InternshipOffers_modify,InternshipOffers_delete, AddInternshipOffers,InternshipOffers_details  
-from .views import InternshipApplication
+from .views import InternshipApplication,ViewApplications,ModifyApplication,DeleteApplication
+from .views import AddJobNotification,JobNotificationDetails,JobNotificationModify,JobNotificationDelete
 
 # endpoints URLS
 urlpatterns=[
@@ -22,5 +23,12 @@ urlpatterns=[
     path("VJISS/modify_internship_offers/<str:pk>",InternshipOffers_modify.as_view()),
     path("VJISS/delete_internship_offers/<str:pk>",InternshipOffers_delete.as_view()),
     path("VJISS/apply_internship",InternshipApplication.as_view()),
+    path("VJISS/view_applications",ViewApplications.as_view()),
+    path("VJISS/modify_application/<str:pk>",ModifyApplication.as_view()),
+    path("VJISS/delete_application/<str:pk>",DeleteApplication.as_view()),
+    path("VJISS/add_job_notification",AddJobNotification.as_view()),
+    path("VJISS/job_notification_details",JobNotificationDetails.as_view()),
+    path("VJISS/modify_job_notification/<str:pk>",JobNotificationModify.as_view()),
+    path("VJISS/delete_job_notification/<str:pk>",JobNotificationDelete.as_view()),
 ]
         

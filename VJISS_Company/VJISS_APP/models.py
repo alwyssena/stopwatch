@@ -98,9 +98,9 @@ class Apply_Internship(models.Model):
     last_name=models.CharField(max_length=200)
     email=models.EmailField()
     phone_number=models.CharField(max_length=15)
-    internship_offers=models.ForeignKey(InternshipOffers,on_delete=models.CASCADE,related_name='internship_specializations')
-    educcation_choices=[('Diploma', 'Diploma'),('UG', 'Under Graduate'),('PG', 'Post Graduate'),('PhD', 'PhD'),]
-    education=models.CharField(max_length=200,choices=educcation_choices)
+    internship_offers=models.ForeignKey(InternshipOffers,on_delete=models.CASCADE,related_name='internship_offers')
+    education_choices=[('Diploma', 'Diploma'),('UG', 'Under Graduate'),('PG', 'Post Graduate'),('PhD', 'PhD'),]
+    education=models.CharField(max_length=200,choices=education_choices)
     resume=models.FileField(upload_to='resumes/')
     applied_on=models.DateTimeField(auto_now_add=True)
     status_choices=[('Pending','Pending'),('Accepted','Accepted'),('Rejected','Rejected')]
@@ -108,3 +108,16 @@ class Apply_Internship(models.Model):
     reason=models.TextField(blank=True,null=True)
     def __str__(self):
         return str(self.application_id)
+
+#job notifications model
+class Job_Notifications(models.Model):
+    notification_id=models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    company_logo=models.ImageField(upload_to='company_logos/')
+    job_title=models.CharField(max_length=200)
+    company_name=models.CharField(max_length=200)
+    location=models.CharField(max_length=200)
+    job_description=models.TextField()
+    requirements=models.TextField()
+    link=models.URLField()
+    def __str__(self):
+        return str(self.notification_id)
