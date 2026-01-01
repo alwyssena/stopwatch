@@ -1,0 +1,2 @@
+word = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+print(word[0::8])
