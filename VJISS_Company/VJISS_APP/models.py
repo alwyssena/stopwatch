@@ -35,10 +35,10 @@ class Create_User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(unique=True, blank=False, null=False)
     phone_number = models.CharField(max_length=15, unique=True, blank=False, null=False)
-   
-    
-    GENDER_CHOICES = [('M', 'Male'), ('F', 'Female'), ('O', 'Other')]
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
+
+
+    GENDER_CHOICES = [('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')]
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='Male')
     date_of_birth = models.DateField()
     
     # ALL REQUIRED FIELDS 

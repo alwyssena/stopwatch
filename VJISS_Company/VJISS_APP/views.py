@@ -44,8 +44,62 @@ class Create_Users(GenericAPIView,CreateModelMixin):
                 print(request.data.get('password'))
                 return Response({'message':'User Create Successfully '},status=status.HTTP_201_CREATED)
             return response
-        
-# login 
+# update user details
+
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import UpdateModelMixin
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Create_User
+from .serializers import Create_User_Serializer
+
+
+class Update_Password(GenericAPIView, UpdateModelMixin):
+    serializer_class = Create_User_Serializer
+    queryset = Create_User.objects.all()
+
+    def get_object(self):
+        email = self.request.data.get("email")
+        phone_number = self.request.data.get("phone_number")
+
+        if not email or not phone_number:
+           return None
+
+        try:
+            return Create_User.objects.get(
+                email=email,
+                phone_number=phone_number
+            )
+        except Create_User.DoesNotExist:
+            return None
+    def put(self, request, *args, **kwargs):
+        user = self.get_object()
+
+        if user is None:
+            return Response(
+                {"error": "Invalid email or phone number"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        new_password = request.data.get("new_password")
+
+        if not new_password:
+            return Response(
+                {"error": "New password is required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        user.set_password(new_password)
+        user.save()
+
+        return Response(
+            {"message": "Password updated successfully"},
+            status=status.HTTP_200_OK
+        )
+
+    def patch(self, request, *args, **kwargs):
+        return self.put(request, *args, **kwargs)
+
         
 class Login(GenericAPIView):
     serializer_class=Login_User_Serializer

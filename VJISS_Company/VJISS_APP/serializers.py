@@ -23,6 +23,7 @@ class Create_User_Serializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
 class Login_User_Serializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
